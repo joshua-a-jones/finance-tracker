@@ -1,0 +1,35 @@
+.navbar {
+  border: 1px solid blue;
+  padding: 20px 10px;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #216b22;
+}
+
+.navbar ul {
+  display: flex;
+  margin: 0 auto;
+  max-width: 960px;
+  align-items: center;
+}
+
+.navbar .title {
+  margin-right: auto;
+  font-weight: bold;
+  font-size: 2rem;
+  color: white;
+}
+
+.navbar button,
+.navbar a {
+  margin-left: 16px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: white;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
