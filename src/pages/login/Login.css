@@ -23,4 +23,5 @@
   font-size: 1em;
   color: #777;
   width: 100%;
+  box-sizing: border-box;
 }

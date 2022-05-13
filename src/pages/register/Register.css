@@ -1,3 +1,30 @@
-.register {
-  border: 1px solid red;
+.registration-form {
+  max-width: 360px;
+  margin: 60px auto;
+  padding: 20px;
+}
+
+.registration-form label {
+  display: block;
+  margin: 30px auto;
+}
+
+.registration-form span {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.registration-form input {
+  padding: 8px 6px;
+  font-size: 1em;
+  color: #777;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.registration-form fieldset {
+  border-radius: 5px;
+  width: 100%;
+  margin: 30px auto;
+  box-sizing: border-box;
 }
