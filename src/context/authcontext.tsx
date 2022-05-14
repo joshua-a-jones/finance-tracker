@@ -1,6 +1,5 @@
 import { createContext, useReducer } from "react";
 import { User as FirebaseUser } from "@firebase/auth-types";
-import { ActionCodeOperation } from "@firebase/auth";
 
 interface IAuthContext {
   user: FirebaseUser | null;
