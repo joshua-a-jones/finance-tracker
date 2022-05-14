@@ -1,19 +1,19 @@
 import { createContext, useReducer } from "react";
-import { User as FirebaseUser } from "@firebase/auth-types";
+import { User as FirebaseUser } from "@firebase/auth";
 
 // type definitions
 interface IAuthContext {
   user: FirebaseUser | null;
   setUser: (user: FirebaseUser) => void;
 }
-interface IAuthState {
+export interface IAuthState {
   user: FirebaseUser | null;
 }
-interface AuthAction {
+export interface AuthAction {
   type: AuthActions;
   payload: FirebaseUser | null;
 }
-enum AuthActions {
+export enum AuthActions {
   SET_USER,
 }
 
@@ -35,17 +35,14 @@ export function AuthContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [state, dispatch] = useReducer(authReducer, { user: null });
+  const [authState, authDispatch] = useReducer(authReducer, { user: null });
 
   const setUser = (user: FirebaseUser) => {
-    dispatch({
-      type: AuthActions.SET_USER,
-      payload: user,
-    });
+    authDispatch({ type: AuthActions.SET_USER, payload: user });
   };
 
   return (
-    <AuthContext.Provider value={{ ...state, setUser }}>
+    <AuthContext.Provider value={{ ...authState, setUser }}>
       {children}
     </AuthContext.Provider>
   );
