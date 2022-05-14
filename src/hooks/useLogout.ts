@@ -1,12 +1,12 @@
-import { AuthActions } from "./../context/authcontext";
 import { auth } from "../firebase/config";
 import { useAuthContext } from "./useAuthContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signOut } from "@firebase/auth";
 import { getErrorMessage } from "../utils/errorHandling";
 
 export const useLogout = () => {
-  const { user, setUser } = useAuthContext();
+  const [isCancelled, setIsCancelled] = useState(false);
+  const { setUser } = useAuthContext();
   const [error, setError] = useState<null | string>(null);
   const [isPending, setIsPending] = useState(false);
 
@@ -21,12 +21,22 @@ export const useLogout = () => {
       //logout locally
       setUser(null);
 
-      setIsPending(false);
+      if (!isCancelled) {
+        setIsPending(false);
+        setError(null);
+      }
     } catch (error) {
-      setIsPending(false);
-      setError(getErrorMessage(error));
+      if (!isCancelled) {
+        setIsPending(false);
+        setError(getErrorMessage(error));
+      }
     }
   };
+
+  // cleanup function in case component unmounts during async operation
+  useEffect(() => {
+    return () => setIsCancelled(true);
+  }, []);
 
   return { logoutUser, error, isPending };
 };

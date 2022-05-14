@@ -1,5 +1,4 @@
-import { AuthActions } from "./../context/authcontext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { auth } from "../firebase/config";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
 import { getErrorMessage } from "../utils/errorHandling";
@@ -7,6 +6,7 @@ import { updateProfile } from "firebase/auth";
 import { useAuthContext } from "./useAuthContext";
 
 export const useRegistration = () => {
+  const [isCancelled, setIsCancelled] = useState(false);
   const [error, setError] = useState<null | string>(null);
   const [isPending, setIsPending] = useState(false);
   const { setUser } = useAuthContext();
@@ -30,14 +30,22 @@ export const useRegistration = () => {
       // set user context state
       setUser(cred.user);
 
-      setIsPending(false);
-      setError(null);
+      if (!isCancelled) {
+        setIsPending(false);
+        setError(null);
+      }
     } catch (error: unknown) {
-      console.log(error);
-      setIsPending(false);
-      setError(getErrorMessage(error));
+      if (!isCancelled) {
+        setIsPending(false);
+        setError(getErrorMessage(error));
+      }
     }
   };
+
+  // cleanup function in case component unmounts during async operation
+  useEffect(() => {
+    return () => setIsCancelled(true);
+  }, []);
 
   return { error, isPending, registerUser };
 };
