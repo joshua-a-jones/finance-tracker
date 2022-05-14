@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import { useRegistration } from "../../hooks/useRegistration";
 
 // styles
 import "./Register.css";
@@ -10,9 +11,11 @@ export default function Register() {
   const [confirmationPassword, setConfirmationPassword] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const { error, isPending, registerUser } = useRegistration();
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    registerUser(email, password, displayName);
   };
 
   const handlEmailInputChange = (e: FormEvent<HTMLInputElement>) => {
@@ -67,9 +70,10 @@ export default function Register() {
           ></input>
         </label>
       </fieldset>
-      <button className="button" type="submit">
+      <button className="button" type="submit" disabled={isPending}>
         Submit
       </button>
+      {error && <p>{error}</p>}
     </form>
   );
 }
