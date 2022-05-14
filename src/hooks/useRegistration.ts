@@ -16,6 +16,7 @@ export const useRegistration = () => {
     password: string,
     displayName: string
   ) => {
+    setIsCancelled(false);
     setError(null);
     setIsPending(true);
 
@@ -44,6 +45,7 @@ export const useRegistration = () => {
 
   // cleanup function in case component unmounts during async operation
   useEffect(() => {
+    setIsCancelled(false);
     return () => setIsCancelled(true);
   }, []);
 

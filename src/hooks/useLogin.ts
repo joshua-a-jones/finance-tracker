@@ -11,6 +11,7 @@ export const useLogin = () => {
   const [isPending, setIsPending] = useState(false);
 
   const loginUser = async (email: string, password: string) => {
+    setIsCancelled(false);
     setIsPending(true);
     setError(null);
 
@@ -35,7 +36,10 @@ export const useLogin = () => {
 
   // cleanup function in case component unmounts during async operation
   useEffect(() => {
-    return () => setIsCancelled(true);
+    setIsCancelled(false);
+    return () => {
+      setIsCancelled(true);
+    };
   }, []);
 
   return { loginUser, error, isPending };
