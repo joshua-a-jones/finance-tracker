@@ -4,7 +4,7 @@ import { User as FirebaseUser } from "@firebase/auth";
 // type definitions
 interface IAuthContext {
   user: FirebaseUser | null;
-  setUser: (user: FirebaseUser) => void;
+  setUser: (user: FirebaseUser | null) => void;
 }
 export interface IAuthState {
   user: FirebaseUser | null;
@@ -37,7 +37,7 @@ export function AuthContextProvider({
 }) {
   const [authState, authDispatch] = useReducer(authReducer, { user: null });
 
-  const setUser = (user: FirebaseUser) => {
+  const setUser = (user: FirebaseUser | null) => {
     authDispatch({ type: AuthActions.SET_USER, payload: user });
   };
 
