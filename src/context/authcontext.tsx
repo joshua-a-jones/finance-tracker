@@ -9,10 +9,10 @@ interface IAuthContext {
 interface IAuthState {
   user: FirebaseUser | null;
 }
-export type AuthAction = {
+interface AuthAction {
   type: AuthActions;
   payload: FirebaseUser | null;
-};
+}
 enum AuthActions {
   SET_USER,
 }
