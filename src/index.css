@@ -19,13 +19,26 @@ ul {
 }
 
 .button {
-  background: #f6115d;
-  border: none;
+  border: 2px solid #00910a;
   cursor: pointer;
   font-size: 1em;
   border-radius: 5px;
   font-weight: bold;
   padding: 6px 12px;
   font-size: 1em;
-  color: white;
+  color: #00910a;
+  width: 100%;
+  display: block;
 }
+
+.button:hover {
+  filter: brightness(0.75);
+}
+
+/*
+4E6B4C
+6CF765
+B1F5AE
+347530
+8DC28A
+*/
