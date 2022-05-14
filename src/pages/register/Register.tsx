@@ -15,7 +15,9 @@ export default function Register() {
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    registerUser(email, password, displayName);
+    if (password === confirmationPassword && isEmailValid && isPasswordValid) {
+      registerUser(email, password, displayName);
+    }
   };
 
   const handlEmailInputChange = (e: FormEvent<HTMLInputElement>) => {
