@@ -2,7 +2,8 @@
   padding: 20px 10px;
   box-sizing: border-box;
   width: 100%;
-  background-color: #216b22;
+  background-color: #8c1241;
+  color: #fffafc;
 }
 
 .navbar ul {
@@ -16,7 +17,6 @@
   margin-right: auto;
   font-weight: bold;
   font-size: 2rem;
-  color: white;
 }
 
 .navbar button,
@@ -26,7 +26,7 @@
 
 .navbar a {
   text-decoration: none;
-  color: white;
+  color: #bfd9c0;
 }
 
 .navbar a:hover {
