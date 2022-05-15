@@ -1,12 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useFirestore } from "../../hooks/useFirestore";
 import { useAuthContext } from "../../hooks/useAuthContext";
-
-export interface ITransaction {
-  author_uid: string;
-  name: string;
-  amount: string;
-}
+import { ITransaction } from "../../api/transaction";
 
 export default function TransactionForm() {
   const [name, setName] = useState("");
