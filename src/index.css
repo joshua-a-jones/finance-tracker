@@ -35,6 +35,14 @@ ul {
   filter: brightness(0.75);
 }
 
+input.invalid {
+  border: 2px solid red;
+}
+
+input.invalid:focus {
+  outline: crimson;
+}
+
 /*
 4E6B4C
 6CF765

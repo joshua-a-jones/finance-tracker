@@ -61,3 +61,11 @@
   background: #8c1241;
   color: white;
 }
+
+.side-bar input.invalid {
+  border: 2px solid red;
+}
+
+.side-bar input.invalid:focus {
+  outline: crimson;
+}

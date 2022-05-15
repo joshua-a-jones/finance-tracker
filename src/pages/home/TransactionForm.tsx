@@ -1,12 +1,44 @@
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useFirestore } from "../../hooks/useFirestore";
+import { useAuthContext } from "../../hooks/useAuthContext";
+
+export interface ITransaction {
+  author_uid: string;
+  name: string;
+  amount: string;
+}
 
 export default function TransactionForm() {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
+  const { response, addDocument } = useFirestore<ITransaction>("transactions");
+  const { user } = useAuthContext();
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (user) {
+      addDocument({ author_uid: user.uid, name, amount });
+    }
   };
+
+  const handleAmountInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setAmount(e.target.value);
+    // only want to accept valid numbers
+    if (e.target.value.length > 0 && isNaN(Number(e.target.value))) {
+      e.target.classList.add("invalid");
+      e.target.setCustomValidity("Amount must be a number");
+    } else {
+      e.target.classList.remove("invalid");
+      e.target.setCustomValidity("");
+    }
+  };
+
+  useEffect(() => {
+    if (response.success) {
+      setName("");
+      setAmount("");
+    }
+  }, [response.success]);
   return (
     <>
       <h3>Add a Transaction</h3>
@@ -26,7 +58,7 @@ export default function TransactionForm() {
             type="text"
             required
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => handleAmountInputChange(e)}
           ></input>
         </label>
         <button className="button" type="submit">
