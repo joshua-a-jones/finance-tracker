@@ -4,14 +4,15 @@ import TransactionForm from "./TransactionForm";
 import { useCollection } from "../../hooks/useCollection";
 import { ITransaction } from "../../api/transaction";
 import TransactionList from "../../components/transactionList/TransactionList";
-import { where } from "@firebase/firestore";
+import { where, orderBy } from "@firebase/firestore";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function Home() {
   const { user } = useAuthContext();
   const { documents, error } = useCollection<ITransaction>(
     "transactions",
-    where("author_uid", "==", user?.uid)
+    where("author_uid", "==", user?.uid),
+    orderBy("createdAt", "desc")
   );
 
   return (
