@@ -23,16 +23,18 @@
   font-size: 1.6rem;
 }
 
-.transactions button {
+.transactions .delete-button {
   position: absolute;
   top: 0;
   right: 0;
-  background: #fffafc;
-  color: #777;
+  color: #8c1241;
   border: none;
-  padding: 12px 8px;
   text-align: center;
   line-height: 0;
-  font-size: 0.9rem;
+  font-size: 2rem;
   cursor: pointer;
+}
+
+.transactions .delete-button:hover {
+  filter: brightness(0.7);
 }
