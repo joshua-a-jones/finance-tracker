@@ -1,8 +1,13 @@
 import { useReducer, useEffect, useState } from "react";
 import { db } from "../firebase/config";
-import { DocumentData, collection, addDoc } from "firebase/firestore";
+import {
+  DocumentData,
+  collection,
+  addDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { getErrorMessage } from "../utils/errorHandling";
-import { Timestamp } from "@firebase/firestore";
+import { doc, Timestamp } from "@firebase/firestore";
 
 // type definitions
 export interface IFirebaseState {
@@ -20,6 +25,7 @@ enum firebaseActions {
   IS_PENDING,
   ADD_DOC,
   ERROR,
+  DELETED_DOC,
 }
 
 let initialState: IFirebaseState = {
@@ -54,6 +60,14 @@ const firestoreReducer = (state: IFirebaseState, action: FirebaseAction) => {
         success: false,
         document: null,
         error: action.payload?.error,
+      };
+    case firebaseActions.DELETED_DOC:
+      return {
+        ...state,
+        isPending: false,
+        success: true,
+        document: null,
+        error: null,
       };
     default:
       return state;
@@ -97,7 +111,21 @@ export const useFirestore = <T>(dbCollection: string) => {
   };
 
   // delete document
-  const deleteDocument = async (id: string) => {};
+  const deleteDocument = async (id: string) => {
+    dispatch({ type: firebaseActions.IS_PENDING });
+
+    try {
+      await deleteDoc(doc(collectionRef, `${id}`));
+      dispatchIfNotCancelled({
+        type: firebaseActions.DELETED_DOC,
+      });
+    } catch (error) {
+      dispatchIfNotCancelled({
+        type: firebaseActions.ERROR,
+        payload: { error: getErrorMessage(error) },
+      });
+    }
+  };
 
   // cleanup function in case component unmounts while waiting on async process
   useEffect(() => {
